@@ -24,13 +24,25 @@ spec:
   - name: http
     port: {{ .http.port }}
     targetPort: 8080
+    {{- if .http.nodePort }}
+    nodePort: {{ .http.nodePort }}
+    {{- end }}
   {{- if .ssh.enabled }}
   - name: ssh
     port: {{ .ssh.port }}
     targetPort: 29418
+    {{- if .ssh.nodePort }}
+    nodePort: {{ .ssh.nodePort }}
+    {{- end }}
+  {{- if .extraPorts }}
+  {{- toYaml .extraPorts | nindent 2 }}
+  {{- end }}
   {{- end }}
   type: {{ .type }}
   externalTrafficPolicy: {{ .externalTrafficPolicy }}
+  {{- end }}
+  {{- if .Values.gerrit.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.gerrit.service.loadBalancerIP }}
   {{- end }}
   selector:
     app.kubernetes.io/component: gerrit

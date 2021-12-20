@@ -203,9 +203,13 @@ gerrit:
     externalTrafficPolicy: Cluster
     http:
       port: 80
+      nodePort:
     ssh:
       enabled: false
       port: 29418
+      nodePort:
+    loadBalancerIP:
+    extraPorts: []
 
   # `gerrit.keystore` expects a base64-encoded Java-keystore
   # Since Java keystores are binary files, adding the unencoded content and
